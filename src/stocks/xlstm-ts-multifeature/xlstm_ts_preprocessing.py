@@ -520,10 +520,10 @@ def main():
     # Save to structured directories
     print(f"\n💾 Saving data to {DATA_STORAGE['preprocessed_data_dir']}...")
 
-    torch.save(X_train_tensor, DATA_STORAGE['preprocessed_data_dir'] + 'X_train_mixed.pt')
-    torch.save(y_train_tensor, DATA_STORAGE['preprocessed_data_dir'] + 'y_train_mixed.pt')
-    torch.save(X_val_tensor, DATA_STORAGE['preprocessed_data_dir'] + 'X_val_mixed.pt')
-    torch.save(y_val_tensor, DATA_STORAGE['preprocessed_data_dir'] + 'y_val_mixed.pt')
+    torch.save(X_train_tensor, '../../../data/preprocessed/X_train_mixed.pt')
+    torch.save(y_train_tensor, '../../../data/preprocessed/y_train_mixed.pt')
+    torch.save(X_val_tensor, '../../../data/preprocessed/X_val_mixed.pt')
+    torch.save(y_val_tensor, '../../../data/preprocessed/y_val_mixed.pt')
 
     # Save comprehensive metadata
     metadata = {
@@ -541,7 +541,7 @@ def main():
             'train_split': TRAIN_SPLIT
         }
     }
-    with open(DATA_STORAGE['scalers_file'], 'w') as f:
+    with open('../../../data/scalers.json', 'w') as f:
         json.dump(metadata, f, indent=2)
 
     print(f"✅ Preprocessing complete!")
@@ -608,7 +608,7 @@ def main():
                     bar.set_color('blue')
 
         plt.tight_layout()
-        etf_plot_path = DATA_STORAGE['plots_dir'] + 'normalized_etf_features.png'
+        etf_plot_path = '../../../data/plots/normalized_etf_features.png'
         plt.savefig(etf_plot_path, dpi=200, bbox_inches='tight')
         print(f"   📊 ETF features plot saved: {etf_plot_path}")
         plt.show()
@@ -659,7 +659,7 @@ def main():
                         bar.set_color('blue')
 
             plt.tight_layout()
-            stock_plot_path = DATA_STORAGE['plots_dir'] + 'normalized_stock_features.png'
+            stock_plot_path = '../../../data/plots/normalized_stock_features.png'
             plt.savefig(stock_plot_path, dpi=200, bbox_inches='tight')
             print(f"   📊 Stock features plot saved: {stock_plot_path}")
             plt.show()

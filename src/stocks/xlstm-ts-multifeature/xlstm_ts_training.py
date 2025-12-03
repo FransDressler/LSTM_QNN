@@ -215,10 +215,10 @@ def main():
 
     # Load data using config paths
     try:
-        X_train = torch.load(DATA_STORAGE['preprocessed_data_dir'] + 'X_train_mixed.pt')
-        y_train = torch.load(DATA_STORAGE['preprocessed_data_dir'] + 'y_train_mixed.pt')
-        X_val = torch.load(DATA_STORAGE['preprocessed_data_dir'] + 'X_val_mixed.pt')
-        y_val = torch.load(DATA_STORAGE['preprocessed_data_dir'] + 'y_val_mixed.pt')
+        X_train = torch.load('../../../data/preprocessed/X_train_mixed.pt')
+        y_train = torch.load('../../../data/preprocessed/y_train_mixed.pt')
+        X_val = torch.load('../../../data/preprocessed/X_val_mixed.pt')
+        y_val = torch.load('../../../data/preprocessed/y_val_mixed.pt')
 
         print(f"✅ Data loaded: {X_train.shape}, {X_val.shape}")
 
@@ -299,8 +299,8 @@ def main():
         if avg_val < best_val_loss:
             best_val_loss = avg_val
             no_improve = 0
-            torch.save(model.state_dict(), '../../models/best_stock_xlstm.pth')
-            torch.save(model, '../../models/stock_xlstm_complete.pth')
+            torch.save(model.state_dict(), '../../../models/best_stock_xlstm.pth')
+            torch.save(model, '../../../models/stock_xlstm_complete.pth')
             saved_msg = " <- Best"
         else:
             no_improve += 1
@@ -317,7 +317,7 @@ def main():
             break
 
     # Save results
-    with open('../../models/stock_xlstm_training_history.json', 'w') as f:
+    with open('../../../models/stock_xlstm_training_history.json', 'w') as f:
         json.dump(history, f, indent=2)
 
     # Create training plot
@@ -330,13 +330,13 @@ def main():
     plt.ylabel('RMSE (%)')
     plt.legend()
     plt.grid(True, alpha=0.3)
-    plt.savefig('../../models/xlstm_training_progress.png', dpi=200, bbox_inches='tight')
+    plt.savefig('../../../models/xlstm_training_progress.png', dpi=200, bbox_inches='tight')
     plt.show()
 
     print(f"\n✅ Training complete!")
     print(f"   Best validation loss: {best_val_loss:.5f} (RMSE: {np.sqrt(best_val_loss):.2f}%)")
-    print(f"   Models saved to: ../../models/")
-    print(f"   Training plot: ../../models/xlstm_training_progress.png")
+    print(f"   Models saved to: ../../../models/")
+    print(f"   Training plot: ../../../models/xlstm_training_progress.png")
 
 if __name__ == "__main__":
     main()

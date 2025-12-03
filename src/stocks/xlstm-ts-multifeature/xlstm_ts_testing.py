@@ -17,7 +17,7 @@ from datetime import datetime, timedelta
 import json
 
 # Import model class
-from training import StockXLSTMTS
+from xlstm_ts_training import StockXLSTMTS
 
 # Load configuration
 with open('config.json', 'r') as f:
@@ -28,7 +28,7 @@ ETF_SYMBOLS = CONFIG['assets']['etfs']['symbols']
 STOCK_SYMBOLS = CONFIG['assets']['stocks']['symbols']
 
 # Import asset feature functions from preprocessing
-from preprocessing import get_asset_features, calculate_relative_features
+from xlstm_ts_preprocessing import get_asset_features, calculate_relative_features
 
 
 def main():
@@ -38,7 +38,7 @@ def main():
     # Load X-LSTM model - prioritize best model (state_dict)
     try:
         # First try to load best state dict and create model architecture
-        from training import StockXLSTMTS
+        from xlstm_ts_training import StockXLSTMTS
         model = StockXLSTMTS(
             input_dim=18,       # 10 relative + 8 asset features
             hidden_dim=128,     # Updated architecture
@@ -47,13 +47,13 @@ def main():
             dropout=0.3,
             num_layers=3
         )
-        model.load_state_dict(torch.load('../../models/best_stock_xlstm.pth', map_location='cpu'))
+        model.load_state_dict(torch.load('../../../models/best_stock_xlstm.pth', map_location='cpu'))
         print("✅ X-LSTM-TS Best Model (state_dict) loaded")
         model.eval()
     except:
         # Fallback: Try to load complete model
         try:
-            model = torch.load('../../models/stock_xlstm_complete.pth', map_location='cpu')
+            model = torch.load('../../../models/stock_xlstm_complete.pth', map_location='cpu')
             print("✅ X-LSTM-TS Complete Model loaded")
             model.eval()
         except:
@@ -67,7 +67,7 @@ def main():
 
     # Load metadata including scalers
     try:
-        with open(DATA_STORAGE['scalers_file'], 'r') as f:
+        with open('../../../data/scalers.json', 'r') as f:
             metadata = json.load(f)
         print("✅ Metadata loaded (scalers, config)")
     except:
@@ -294,7 +294,7 @@ def main():
             continue
 
     plt.tight_layout()
-    plt.savefig('../../models/stock_xlstm_predictions.png', dpi=200, bbox_inches='tight')
+    plt.savefig('../../../models/stock_xlstm_predictions.png', dpi=200, bbox_inches='tight')
     plt.show()
 
     # Summary
@@ -344,7 +344,7 @@ def main():
     print(f"   💡 Daily percentage changes range: {np.min(all_pred_pcts):.2f}% to {np.max(all_pred_pcts):.2f}%")
     print(f"   📊 Mean daily prediction: {np.mean(all_pred_pcts):.2f}% ± {np.std(all_pred_pcts):.2f}%")
 
-    print(f"\n💾 Comparison chart saved to: ../../models/stock_xlstm_predictions.png")
+    print(f"\n💾 Comparison chart saved to: ../../../models/stock_xlstm_predictions.png")
 
 if __name__ == "__main__":
     main()

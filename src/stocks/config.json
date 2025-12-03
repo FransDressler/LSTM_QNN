@@ -1,0 +1,127 @@
+{
+  "model_config": {
+    "sequence_length": 60,
+    "prediction_length": 14,
+    "train_split": 0.8,
+    "max_years": 20
+  },
+  "assets": {
+    "etfs": {
+      "symbols": ["SPY", "QQQ", "DIA", "IWM"],
+      "features": {
+        "nav_normalized": {
+          "type": "numerical",
+          "center": 200,
+          "scale": 200,
+          "description": "Net Asset Value around $200"
+        },
+        "beta_normalized": {
+          "type": "numerical",
+          "center": 1.0,
+          "scale": 1.0,
+          "description": "Beta around 1.0 ± 1.0"
+        },
+        "volume_normalized": {
+          "type": "log_numerical",
+          "center": 1e6,
+          "scale": 2,
+          "description": "Log-scaled volume"
+        },
+        "expense_ratio_normalized": {
+          "type": "numerical",
+          "center": 0.001,
+          "scale": 0.002,
+          "description": "Expense ratio around 0.1% ± 0.2%"
+        },
+        "large_cap_etf": {
+          "type": "categorical",
+          "description": "Large cap ETF indicator"
+        },
+        "growth_etf": {
+          "type": "categorical",
+          "description": "Growth ETF indicator"
+        },
+        "tech_heavy_etf": {
+          "type": "categorical",
+          "description": "Tech heavy ETF indicator"
+        },
+        "high_volatility_etf": {
+          "type": "categorical",
+          "description": "High volatility ETF indicator"
+        }
+      },
+      "hardcoded_features": {
+        "SPY": {"large_cap": 1.0, "growth": 0.0, "tech_heavy": 0.0, "volatility": 0.0},
+        "QQQ": {"large_cap": 1.0, "growth": 1.0, "tech_heavy": 1.0, "volatility": 0.3},
+        "DIA": {"large_cap": 1.0, "growth": -0.3, "tech_heavy": -0.5, "volatility": -0.2},
+        "IWM": {"large_cap": -1.0, "growth": 0.2, "tech_heavy": -0.3, "volatility": 0.8}
+      }
+    },
+    "stocks": {
+      "symbols": ["AAPL", "GOOGL", "TSLA", "MSFT", "NVDA", "META", "AMZN", "NFLX", "AMD", "CRM"],
+      "features": {
+        "market_cap_normalized": {
+          "type": "numerical",
+          "center": 2.5e12,
+          "scale": 2.5e12,
+          "description": "Market cap around 2.5T"
+        },
+        "beta_normalized": {
+          "type": "numerical",
+          "center": 1.0,
+          "scale": 1.5,
+          "description": "Beta around 1.0 ± 1.5"
+        },
+        "pe_ratio_normalized": {
+          "type": "numerical",
+          "center": 25,
+          "scale": 40,
+          "description": "PE ratio around 25 ± 40"
+        },
+        "profit_margin_normalized": {
+          "type": "numerical",
+          "center": 0.15,
+          "scale": 0.3,
+          "description": "Profit margin around 15% ± 30%"
+        },
+        "sector_tech": {
+          "type": "binary_categorical",
+          "positive_value": 1.0,
+          "negative_value": -0.3,
+          "condition": "Technology"
+        },
+        "sector_consumer": {
+          "type": "binary_categorical",
+          "positive_value": 1.0,
+          "negative_value": -0.3,
+          "condition": "Consumer Cyclical"
+        },
+        "sector_communication": {
+          "type": "binary_categorical",
+          "positive_value": 1.0,
+          "negative_value": -0.3,
+          "condition": "Communication Services"
+        },
+        "sector_other": {
+          "type": "binary_categorical",
+          "positive_value": 1.0,
+          "negative_value": -0.3,
+          "condition": "other"
+        }
+      }
+    }
+  },
+  "relative_features": {
+    "returns": "Close price percentage change",
+    "volume_change": "Volume percentage change",
+    "volatility": "Rolling 5-day volatility",
+    "hl_spread_pct": "High-Low spread as percentage of close",
+    "ma_ratio": "5-day MA / 20-day MA ratio - 1",
+    "momentum": "10-day rolling mean of returns"
+  },
+  "data_storage": {
+    "preprocessed_data_dir": "../../data/preprocessed/",
+    "scalers_file": "../../data/scalers.json",
+    "plots_dir": "../../data/plots/"
+  }
+}

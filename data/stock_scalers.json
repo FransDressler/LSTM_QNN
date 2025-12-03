@@ -1,0 +1,36 @@
+{
+  "relative_scaler_min": [
+    -0.013319490564870251,
+    -0.9992579906521638,
+    -1.0087368014782128,
+    -1.019250114889802,
+    0.3776950054803765,
+    0.2091402185565021
+  ],
+  "relative_scaler_scale": [
+    7.437147422579147,
+    0.0007420768492551722,
+    20.5158905387971,
+    15.662015370930778,
+    6.27897910834686,
+    32.67244881824443
+  ],
+  "scaled_feature_names": [
+    "returns",
+    "volume_change",
+    "volatility",
+    "hl_spread_pct",
+    "ma_ratio",
+    "momentum"
+  ],
+  "etf_feature_names": [
+    "nav_normalized",
+    "beta_normalized",
+    "volume_normalized",
+    "expense_ratio_normalized",
+    "large_cap_etf",
+    "growth_etf",
+    "tech_heavy_etf",
+    "high_volatility_etf"
+  ]
+}

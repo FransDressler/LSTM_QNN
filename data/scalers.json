@@ -1,0 +1,238 @@
+{
+  "config": {
+    "model_config": {
+      "sequence_length": 60,
+      "prediction_length": 14,
+      "train_split": 0.8,
+      "max_years": 20
+    },
+    "assets": {
+      "etfs": {
+        "symbols": [
+          "SPY",
+          "QQQ",
+          "DIA",
+          "IWM"
+        ],
+        "features": {
+          "nav_normalized": {
+            "type": "numerical",
+            "center": 200,
+            "scale": 200,
+            "description": "Net Asset Value around $200"
+          },
+          "beta_normalized": {
+            "type": "numerical",
+            "center": 1.0,
+            "scale": 1.0,
+            "description": "Beta around 1.0 \u00b1 1.0"
+          },
+          "volume_normalized": {
+            "type": "log_numerical",
+            "center": 1000000.0,
+            "scale": 2,
+            "description": "Log-scaled volume"
+          },
+          "expense_ratio_normalized": {
+            "type": "numerical",
+            "center": 0.001,
+            "scale": 0.002,
+            "description": "Expense ratio around 0.1% \u00b1 0.2%"
+          },
+          "large_cap_etf": {
+            "type": "categorical",
+            "description": "Large cap ETF indicator"
+          },
+          "growth_etf": {
+            "type": "categorical",
+            "description": "Growth ETF indicator"
+          },
+          "tech_heavy_etf": {
+            "type": "categorical",
+            "description": "Tech heavy ETF indicator"
+          },
+          "high_volatility_etf": {
+            "type": "categorical",
+            "description": "High volatility ETF indicator"
+          }
+        },
+        "hardcoded_features": {
+          "SPY": {
+            "large_cap": 1.0,
+            "growth": 0.0,
+            "tech_heavy": 0.0,
+            "volatility": 0.0
+          },
+          "QQQ": {
+            "large_cap": 1.0,
+            "growth": 1.0,
+            "tech_heavy": 1.0,
+            "volatility": 0.3
+          },
+          "DIA": {
+            "large_cap": 1.0,
+            "growth": -0.3,
+            "tech_heavy": -0.5,
+            "volatility": -0.2
+          },
+          "IWM": {
+            "large_cap": -1.0,
+            "growth": 0.2,
+            "tech_heavy": -0.3,
+            "volatility": 0.8
+          }
+        }
+      },
+      "stocks": {
+        "symbols": [
+          "AAPL",
+          "GOOGL",
+          "TSLA",
+          "MSFT",
+          "NVDA",
+          "META",
+          "AMZN",
+          "NFLX",
+          "AMD",
+          "CRM"
+        ],
+        "features": {
+          "market_cap_normalized": {
+            "type": "numerical",
+            "center": 2500000000000.0,
+            "scale": 2500000000000.0,
+            "description": "Market cap around 2.5T"
+          },
+          "beta_normalized": {
+            "type": "numerical",
+            "center": 1.0,
+            "scale": 1.5,
+            "description": "Beta around 1.0 \u00b1 1.5"
+          },
+          "pe_ratio_normalized": {
+            "type": "numerical",
+            "center": 25,
+            "scale": 40,
+            "description": "PE ratio around 25 \u00b1 40"
+          },
+          "profit_margin_normalized": {
+            "type": "numerical",
+            "center": 0.15,
+            "scale": 0.3,
+            "description": "Profit margin around 15% \u00b1 30%"
+          },
+          "sector_tech": {
+            "type": "binary_categorical",
+            "positive_value": 1.0,
+            "negative_value": -0.3,
+            "condition": "Technology"
+          },
+          "sector_consumer": {
+            "type": "binary_categorical",
+            "positive_value": 1.0,
+            "negative_value": -0.3,
+            "condition": "Consumer Cyclical"
+          },
+          "sector_communication": {
+            "type": "binary_categorical",
+            "positive_value": 1.0,
+            "negative_value": -0.3,
+            "condition": "Communication Services"
+          },
+          "sector_other": {
+            "type": "binary_categorical",
+            "positive_value": 1.0,
+            "negative_value": -0.3,
+            "condition": "other"
+          }
+        }
+      }
+    },
+    "relative_features": {
+      "returns": "Close price percentage change",
+      "volume_change": "Volume percentage change",
+      "volatility": "Rolling 5-day volatility",
+      "hl_spread_pct": "High-Low spread as percentage of close",
+      "ma_ratio": "5-day MA / 20-day MA ratio - 1",
+      "momentum": "10-day rolling mean of returns"
+    },
+    "data_storage": {
+      "preprocessed_data_dir": "../../data/preprocessed/",
+      "scalers_file": "../../data/scalers.json",
+      "plots_dir": "../../data/plots/"
+    }
+  },
+  "relative_scaler_min": [
+    -0.007422310733801063,
+    -0.3247208238844014,
+    -1.0001981605382135,
+    -1.0179878424231805,
+    -0.049840874725688544,
+    0.09711378556273798,
+    -0.396386741750287,
+    -0.4702144643573093,
+    -0.25536407496827285
+  ],
+  "relative_scaler_scale": [
+    8.68034364540922,
+    0.7611843623146782,
+    24.73730859978895,
+    10.35155349640555,
+    2.9602987171604482,
+    17.66516313888101,
+    1.3963867417502869,
+    1.7914712630334588,
+    2.230109185749524
+  ],
+  "scaled_feature_names": [
+    "returns",
+    "volume_change",
+    "volatility",
+    "hl_spread_pct",
+    "ma_ratio",
+    "momentum"
+  ],
+  "etf_feature_names": [
+    "nav_normalized",
+    "beta_normalized",
+    "volume_normalized",
+    "expense_ratio_normalized",
+    "large_cap_etf",
+    "growth_etf",
+    "tech_heavy_etf",
+    "high_volatility_etf"
+  ],
+  "stock_feature_names": [
+    "market_cap_normalized",
+    "beta_normalized",
+    "pe_ratio_normalized",
+    "profit_margin_normalized",
+    "sector_tech",
+    "sector_consumer",
+    "sector_communication",
+    "sector_other"
+  ],
+  "processing_info": {
+    "train_samples": 52779,
+    "val_samples": 12508,
+    "etf_symbols": [
+      "SPY",
+      "QQQ",
+      "DIA",
+      "IWM"
+    ],
+    "stock_symbols": [
+      "AAPL",
+      "GOOGL",
+      "TSLA",
+      "MSFT",
+      "NVDA",
+      "META",
+      "AMZN",
+      "NFLX",
+      "AMD",
+      "CRM"
+    ],
+    "train_split": 0.8
+  }
+}
